@@ -15,7 +15,8 @@ $(function () {
             $this.prop("disabled", true);
 
             $.ajax({
-                url: "contact.php",
+                // NOTE: paths in JS are resolved relative to the HTML page URL (contact.html)
+                url: "mail/contact.php",
                 type: "POST",
                 data: {
                     name: name,
@@ -34,11 +35,18 @@ $(function () {
                             .append('</div>');
                     $('#contactForm').trigger("reset");
                 },
-                error: function () {
+                error: function (jqXHR) {
+                    var serverMsg = (jqXHR && jqXHR.responseText) ? jqXHR.responseText : "";
                     $('#success').html("<div class='alert alert-danger'>");
                     $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
                             .append("</button>");
-                    $('#success > .alert-danger').append($("<strong>").text("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!"));
+                    $('#success > .alert-danger').append(
+                        $("<strong>").text(
+                            serverMsg
+                                ? ("Error: " + serverMsg)
+                                : ("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!")
+                        )
+                    );
                     $('#success > .alert-danger').append('</div>');
                     $('#contactForm').trigger("reset");
                 },

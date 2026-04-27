@@ -9272,11 +9272,15 @@ button.bg-dark:focus {
 }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #527a20 !important;
+  color: #3d9cfc !important;
 }
 
 .text-secondary {
   color: #f4faec !important;
+}
+/* Social links in footer should not inherit the global green hover */
+.footer-social a:hover, .footer-social a:focus {
+  color: #3d9cfc !important;
 }
 
 a.text-secondary:hover, a.text-secondary:focus {
